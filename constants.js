@@ -1,0 +1,626 @@
+export const contractAddress = "0xD7e1A359A48817775d624041507F586B1Ea805D5"
+export const abi = [
+    {
+      "inputs": [
+        {
+          "internalType": "uint8",
+          "name": "_protocolFee",
+          "type": "uint8"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "previousOwner",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "OwnershipTransferred",
+      "type": "event"
+    },
+    {
+      "stateMutability": "nonpayable",
+      "type": "fallback"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "AllBets",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "address",
+              "name": "Maker",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "Taker",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "SkinToken",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "OracleAddressMain",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "OracleAddress2",
+              "type": "address"
+            }
+          ],
+          "internalType": "struct EscrowBet.BetAddresses",
+          "name": "betAddresses",
+          "type": "tuple"
+        },
+        {
+          "internalType": "uint256",
+          "name": "BetAmount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "EndTime",
+          "type": "uint256"
+        },
+        {
+          "internalType": "enum EscrowBet.Status",
+          "name": "BetStatus",
+          "type": "uint8"
+        },
+        {
+          "internalType": "enum EscrowBet.OracleType",
+          "name": "OracleName",
+          "type": "uint8"
+        },
+        {
+          "internalType": "uint24",
+          "name": "UniswapFeePool",
+          "type": "uint24"
+        },
+        {
+          "internalType": "uint256",
+          "name": "PriceLine",
+          "type": "uint256"
+        },
+        {
+          "internalType": "enum EscrowBet.Comparison",
+          "name": "Comparitor",
+          "type": "uint8"
+        },
+        {
+          "internalType": "bool",
+          "name": "MakerCancel",
+          "type": "bool"
+        },
+        {
+          "internalType": "bool",
+          "name": "TakerCancel",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "BetNumber",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "PROTOCOL_FEE",
+      "outputs": [
+        {
+          "internalType": "uint8",
+          "name": "",
+          "type": "uint8"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "UserBets",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_betNumber",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "acceptBetWithUserBalance",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "name": "balances",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "depositedBalance",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "escrowedBalance",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_takerAddress",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_skinTokenAddress",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_amount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint32",
+          "name": "_time",
+          "type": "uint32"
+        },
+        {
+          "internalType": "address",
+          "name": "_oracleAddressMain",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_oracleAddress2",
+          "type": "address"
+        },
+        {
+          "internalType": "enum EscrowBet.OracleType",
+          "name": "_oracleName",
+          "type": "uint8"
+        },
+        {
+          "internalType": "uint24",
+          "name": "_uniFeePool",
+          "type": "uint24"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_priceLine",
+          "type": "uint256"
+        },
+        {
+          "internalType": "enum EscrowBet.Comparison",
+          "name": "_comparitor",
+          "type": "uint8"
+        }
+      ],
+      "name": "betWithUserBalance",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_betNumber",
+          "type": "uint256"
+        }
+      ],
+      "name": "cancelBet",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint8",
+          "name": "_newProtocolFee",
+          "type": "uint8"
+        }
+      ],
+      "name": "changeProtocolFee",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_newFactoryAddress",
+          "type": "address"
+        }
+      ],
+      "name": "changeUniV3Factory",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_betNumber",
+          "type": "uint256"
+        }
+      ],
+      "name": "checkClosable",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_betNumber",
+          "type": "uint256"
+        }
+      ],
+      "name": "closeBet",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_betNumber",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "depositAndAcceptBet",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_takerAddress",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_skinTokenAddress",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_amount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint32",
+          "name": "_time",
+          "type": "uint32"
+        },
+        {
+          "internalType": "address",
+          "name": "_oracleAddressMain",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_oracleAddress2",
+          "type": "address"
+        },
+        {
+          "internalType": "enum EscrowBet.OracleType",
+          "name": "_oracleName",
+          "type": "uint8"
+        },
+        {
+          "internalType": "uint24",
+          "name": "_uniFeePool",
+          "type": "uint24"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_priceLine",
+          "type": "uint256"
+        },
+        {
+          "internalType": "enum EscrowBet.Comparison",
+          "name": "_comparitor",
+          "type": "uint8"
+        }
+      ],
+      "name": "depositAndBet",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_tokenAddress",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "depositTokens",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_oracleAddress",
+          "type": "address"
+        }
+      ],
+      "name": "getChainlinkPrice",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_oracleAddress",
+          "type": "address"
+        }
+      ],
+      "name": "getDecimals",
+      "outputs": [
+        {
+          "internalType": "uint8",
+          "name": "",
+          "type": "uint8"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_betNumber",
+          "type": "uint256"
+        }
+      ],
+      "name": "getOraclePriceByBet",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "owner",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "renounceOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_betNumber",
+          "type": "uint256"
+        }
+      ],
+      "name": "requestBetCancel",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_UniLibAddr",
+          "type": "address"
+        }
+      ],
+      "name": "setUniswapOracleLibrary",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_token",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "transferERC20",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "transferOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "twapGetter",
+      "outputs": [
+        {
+          "internalType": "contract UniV3TwapOracleInterface",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_tokenAddress",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "userWithdrawTokens",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "withdrawEther",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ]
