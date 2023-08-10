@@ -2,6 +2,7 @@
 import {ethers} from "./ethers-5.6.esm.min.js"
 import {abi, contractAddress} from "./constants.js"
 import { erc20_abi } from "./erc20-abi.js"
+import {uniContractAddress, uni_abi} from "./uniswapTWAPOracleLib-abi.js"
 
 const connectButton = document.getElementById("connectButton")
 const fundButton = document.getElementById("tokenDepositButton")
@@ -14,6 +15,7 @@ const acceptBetNumberButton = document.getElementById("acceptBetNumberButton")
 const closeBetNumberButton = document.getElementById("closeBetNumberButton")
 const getBalanceButton = document.getElementById("getBalanceButton")
 const cancelBetNumberButton = document.getElementById("cancelBetNumberButton")
+const uniswapOracleButton = document.getElementById("uniswapOracleButton")
 chainlinkOracleButton
 connectButton.onclick = connect
 fundButton.onclick = fundTokens
@@ -26,6 +28,7 @@ acceptBetNumberButton.onclick = acceptBet
 closeBetNumberButton.onclick = closeBet
 getBalanceButton.onclick = getBalance
 cancelBetNumberButton.onclick = usersCancelBet
+uniswapOracleButton.onclick = uniswapPrice
 
 async function connect(){
     if (typeof window.ethereum != undefined){
@@ -64,7 +67,7 @@ async function getBalance() {
 }
 
 async function fundTokens() {
-    const amount = document.getElementById("depsoitAmount").value
+    const amount = document.getElementById("depositAmount").value
     const tokenAddress = document.getElementById("depositTokenAddress").value
     console.log(`Checking erc20 allowance of ${tokenAddress}`)
     if (typeof window.ethereum != undefined){
@@ -213,6 +216,7 @@ async function makerCancelBet() {
 
 async function queryBet() {
     const betNumber = document.getElementById("betNumberQuery").value
+    const betQueryResults = document.getElementById("betQueryResults")
     if (typeof window.ethereum != undefined){
         //Finds node endpoint in Metamask
         const provider = new ethers.providers.Web3Provider(window.ethereum)
@@ -221,6 +225,7 @@ async function queryBet() {
         const contract = new ethers.Contract(contractAddress, abi, signer)
         try {
             const queryBet = await contract.AllBets(betNumber)
+            betQueryResults.innerHTML = `${queryBet[0][0]} made bet with ${queryBet[0][1]} for ${queryBet[1]} amount of token ${queryBet[0][2]} with priceline ${queryBet[6]} and status is ${queryBet[3]}`
             console.log(queryBet)
         } catch (error) {
             console.log(error)
@@ -279,6 +284,32 @@ async function usersCancelBet() {
         try {
             const cancelBetTx = await contract.requestBetCancel(betNumber)
             console.log(cancelBetTx)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+}
+
+async function uniswapPrice() {
+    const addressOne = document.getElementById("uniswapAddressOne").value
+    const addressTwo = document.getElementById("uniswapAddressTwo").value
+    const feePool = document.getElementById("uniswapPoolFee").value
+    const uniFactoryGoerli = "0x1F98431c8aD98523631AE4a59f267346ea31F984"
+    const twapInterval = 60
+    if (typeof window.ethereum != undefined){
+        //Finds node endpoint in Metamask
+        const provider = new ethers.providers.Web3Provider(window.ethereum)
+        const signer = provider.getSigner()
+        console.log(`checking Uniswap oracle price...`)
+        const uniLibContract = new ethers.Contract(uniContractAddress, uni_abi, signer)
+        //const contract = new ethers.Contract(contractAddress, abi, signer)
+        try {
+            const addressZero = await uniLibContract.getToken0(uniFactoryGoerli, addressOne, addressTwo, feePool)
+            if(addressZero == addressOne) {addressOne = addressTwo}
+            const tokenZeroDecimals = await new ethers.Contract(addressZero, erc20_abi, signer).decimals()
+            const price = await uniLibContract.convertToHumanReadable(uniFactoryGoerli, addressZero, addressOne, feePool, twapInterval,
+                tokenZeroDecimals)
+            console.log(price.toNumber())
         } catch (error) {
             console.log(error)
         }
