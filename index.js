@@ -182,6 +182,7 @@ async function createNewBet() {
 
 async function chainlinkOracle(){
     const oracleAddress = document.getElementById("chainlinkOracle").value
+    const currentPrice = document.getElementById("chainlinkPrice")
     if (typeof window.ethereum != undefined){
         //Finds node endpoint in Metamask
         const provider = new ethers.providers.Web3Provider(window.ethereum)
@@ -190,7 +191,8 @@ async function chainlinkOracle(){
         const contract = new ethers.Contract(contractAddress, abi, signer)
         try {
             const oracleCheck = await contract.getChainlinkPrice(oracleAddress)
-            console.log(oracleCheck)
+            console.log(oracleCheck.toNumber())
+            currentPrice.innerHTML = `Current round price: ${oracleCheck.toNumber()}`
         } catch (error) {
             console.log(error)
         }
