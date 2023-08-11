@@ -21,7 +21,10 @@
         <label id="escrowedTokensField" >0.000</label>
         
         <br><br>
-        Goerli Chainlink token addres: 0x326C977E6efc84E512bB9C30f76E30c160eD06FB
+        Goerli wETH token address: 0xb4fbf271143f4fbf7b91a5ded31805e42b2208d6<br>
+        Goerli USDC token address: 0x07865c6e87b9f70255377e024ace6630c1eaa37f<br>
+        Goerli Chainlink token address: 0x326C977E6efc84E512bB9C30f76E30c160eD06FB<br>
+        Goerli Uniswap token address: 0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984<br>
         <br><strong>Deposit Tokens</strong><br>
         <label for="tokenDepositAmount">Token Amount</label>
         <input id="depositAmount" placeholder="0.1" type="number"/>
@@ -118,7 +121,10 @@
         <label for="uniswapFeePrompt">Pool Swap Fee:</label>
         <input id="uniswapPoolFee" placeholder="3000" type="number"/>
         <button type="button" id="uniswapOracleButton" > Get Most Recent Data </button>
-        <br>
+        <br><br>
+        <label for="changeUniLibraryPrompt">New Uni Library: </label>
+        <input id="newUniLibraryAddress" placeholder="0x..."/>
+        <button type="button" id="changeUniLibraryButton" > Change Uni Library </button>
         
     </body>
     <script src="./index.js" type="module"></script>

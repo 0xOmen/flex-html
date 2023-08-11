@@ -16,6 +16,7 @@ const closeBetNumberButton = document.getElementById("closeBetNumberButton")
 const getBalanceButton = document.getElementById("getBalanceButton")
 const cancelBetNumberButton = document.getElementById("cancelBetNumberButton")
 const uniswapOracleButton = document.getElementById("uniswapOracleButton")
+const changeUniLibraryButton = document.getElementById("changeUniLibraryButton")
 chainlinkOracleButton
 connectButton.onclick = connect
 fundButton.onclick = fundTokens
@@ -29,6 +30,7 @@ closeBetNumberButton.onclick = closeBet
 getBalanceButton.onclick = getBalance
 cancelBetNumberButton.onclick = usersCancelBet
 uniswapOracleButton.onclick = uniswapPrice
+changeUniLibraryButton.onclick = changeUniLibrary
 
 async function connect(){
     if (typeof window.ethereum != undefined){
@@ -311,7 +313,24 @@ async function uniswapPrice() {
             const tokenZeroDecimals = await new ethers.Contract(addressZero, erc20_abi, signer).decimals()
             const price = await uniLibContract.convertToHumanReadable(uniFactoryGoerli, addressZero, addressOne, feePool, twapInterval,
                 tokenZeroDecimals)
-            console.log(price.toNumber())
+            console.log(price.toString())
+        } catch (error) {
+            console.log(error)
+        }
+    }
+}
+
+async function changeUniLibrary() {
+    const newUniLibraryAdr = document.getElementById("newUniLibraryAddress").value
+    if (typeof window.ethereum != undefined){
+        //Finds node endpoint in Metamask
+        const provider = new ethers.providers.Web3Provider(window.ethereum)
+        const signer = provider.getSigner()
+        console.log(`Changing UniswapOracleLibrary...`)
+        const contract = new ethers.Contract(contractAddress, abi, signer)
+        try {
+            const changeLibTx = await contract.setUniswapOracleLibrary(newUniLibraryAdr)
+            console.log(changeLibTx)
         } catch (error) {
             console.log(error)
         }
