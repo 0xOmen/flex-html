@@ -1,8 +1,8 @@
 //import ethers from "front end file"
-import {ethers} from "./ethers-5.6.esm.min.js"
-import {abi, contractAddress} from "./constants.js"
+import { ethers } from "./ethers-5.6.esm.min.js"
+import { abi, contractAddress } from "./constants.js"
 import { erc20_abi } from "./erc20-abi.js"
-import {uniContractAddress, uni_abi} from "./uniswapTWAPOracleLib-abi.js"
+import { uniContractAddress, uni_abi } from "./uniswapTWAPOracleLib-abi.js"
 
 const connectButton = document.getElementById("connectButton")
 const fundButton = document.getElementById("tokenDepositButton")
@@ -32,9 +32,9 @@ cancelBetNumberButton.onclick = usersCancelBet
 uniswapOracleButton.onclick = uniswapPrice
 changeUniLibraryButton.onclick = changeUniLibrary
 
-async function connect(){
-    if (typeof window.ethereum != undefined){
-        await window.ethereum.request({method: "eth_requestAccounts"})
+async function connect() {
+    if (typeof window.ethereum != undefined) {
+        await window.ethereum.request({ method: "eth_requestAccounts" })
         const provider = new ethers.providers.Web3Provider(window.ethereum)
         const signer = provider.getSigner()
         const userAddress = await signer.getAddress()
@@ -48,7 +48,7 @@ async function connect(){
 
 async function getBalance() {
     const tokenAddress = document.getElementById("tokenBalanceID").value
-    if (typeof window.ethereum != undefined){
+    if (typeof window.ethereum != undefined) {
         //Finds node endpoint in Metamask
         const provider = new ethers.providers.Web3Provider(window.ethereum)
         const signer = provider.getSigner()
@@ -57,11 +57,25 @@ async function getBalance() {
         const contract = new ethers.Contract(contractAddress, abi, signer)
         try {
             const balances = await contract.balances(userAddress, tokenAddress)
-            const availableTokensField = document.getElementById("availableTokensField")
-            const escrowedTokensField = document.getElementById("escrowedTokensField")
-            const tokenDecimals = await new ethers.Contract(tokenAddress, erc20_abi, signer).decimals()
-            availableTokensField.innerHTML = ethers.utils.formatUnits((balances[0] - balances[1]).toString(), tokenDecimals)
-            escrowedTokensField.innerHTML = ethers.utils.formatUnits(balances[1].toString(), tokenDecimals)
+            const availableTokensField = document.getElementById(
+                "availableTokensField"
+            )
+            const escrowedTokensField = document.getElementById(
+                "escrowedTokensField"
+            )
+            const tokenDecimals = await new ethers.Contract(
+                tokenAddress,
+                erc20_abi,
+                signer
+            ).decimals()
+            availableTokensField.innerHTML = ethers.utils.formatUnits(
+                (balances[0] - balances[1]).toString(),
+                tokenDecimals
+            )
+            escrowedTokensField.innerHTML = ethers.utils.formatUnits(
+                balances[1].toString(),
+                tokenDecimals
+            )
         } catch (error) {
             console.log(error)
         }
@@ -72,25 +86,37 @@ async function fundTokens() {
     const amount = document.getElementById("depositAmount").value
     const tokenAddress = document.getElementById("depositTokenAddress").value
     console.log(`Checking erc20 allowance of ${tokenAddress}`)
-    if (typeof window.ethereum != undefined){
+    if (typeof window.ethereum != undefined) {
         //Finds node endpoint in Metamask
         const provider = new ethers.providers.Web3Provider(window.ethereum)
         const signer = provider.getSigner()
-        const tokenDecimals = await new ethers.Contract(tokenAddress, erc20_abi, signer).decimals()
+        const tokenDecimals = await new ethers.Contract(
+            tokenAddress,
+            erc20_abi,
+            signer
+        ).decimals()
         const bigNumberAmount = ethers.utils.parseUnits(amount, tokenDecimals)
         console.log(`bignumber = ${bigNumberAmount}`)
         console.log(signer)
         try {
-            await checkAndSetAllowance(signer, tokenAddress, contractAddress, bigNumberAmount)
-            console.log('Approval check completed')
+            await checkAndSetAllowance(
+                signer,
+                tokenAddress,
+                contractAddress,
+                bigNumberAmount
+            )
+            console.log("Approval check completed")
         } catch (error) {
             console.log(error)
         }
         console.log(`Depositing ${amount} of ${tokenAddress}`)
         const contract = new ethers.Contract(contractAddress, abi, signer)
         try {
-            const depositTx = await contract.depositTokens(tokenAddress, bigNumberAmount)
-            await depositTx.wait() 
+            const depositTx = await contract.depositTokens(
+                tokenAddress,
+                bigNumberAmount
+            )
+            await depositTx.wait()
         } catch (error) {
             console.log(error)
         }
@@ -98,22 +124,31 @@ async function fundTokens() {
 }
 
 // Fetch the current allowance and update if needed
-async function checkAndSetAllowance(wallet, tokenAddress, approvalAddress, amount) {
+async function checkAndSetAllowance(
+    wallet,
+    tokenAddress,
+    approvalAddress,
+    amount
+) {
     // Transactions with the native token don't need approval
     if (tokenAddress === ethers.constants.AddressZero) {
         return
     }
-  
+
     const erc20 = new ethers.Contract(tokenAddress, erc20_abi, wallet)
     //check the erc20 allowance on our smart contract
-    const allowance = await erc20.allowance(await wallet.getAddress(), approvalAddress)
+    const allowance = await erc20.allowance(
+        await wallet.getAddress(),
+        approvalAddress
+    )
     if (allowance.lt(amount)) {
-        const approveTx = await erc20.approve(approvalAddress, amount, {gasPrice: await wallet.provider.getGasPrice()})
+        const approveTx = await erc20.approve(approvalAddress, amount, {
+            gasPrice: await wallet.provider.getGasPrice(),
+        })
         try {
             await approveTx.wait()
             console.log(`Transaction mined succesfully: ${approveTx.hash}`)
-        }
-        catch (error) {
+        } catch (error) {
             console.log(`Transaction failed with error: ${error}`)
         }
     }
@@ -122,30 +157,38 @@ async function checkAndSetAllowance(wallet, tokenAddress, approvalAddress, amoun
 async function withdrawTokens() {
     const amount = document.getElementById("withdrawAmount").value
     const tokenAddress = document.getElementById("withdrawTokenAddress").value
-    if (typeof window.ethereum != undefined){
+    if (typeof window.ethereum != undefined) {
         //Finds node endpoint in Metamask
         const provider = new ethers.providers.Web3Provider(window.ethereum)
         const signer = provider.getSigner()
-        const tokenDecimals = await new ethers.Contract(tokenAddress, erc20_abi, signer).decimals()
+        const tokenDecimals = await new ethers.Contract(
+            tokenAddress,
+            erc20_abi,
+            signer
+        ).decimals()
         const bigNumberAmount = ethers.utils.parseUnits(amount, tokenDecimals)
         console.log(`Withdrawing ${amount} of ${tokenAddress}`)
         const contract = new ethers.Contract(contractAddress, abi, signer)
         try {
-            const withdrawTx = await contract.userWithdrawTokens(tokenAddress, bigNumberAmount)
-            await withdrawTx.wait() 
+            const withdrawTx = await contract.userWithdrawTokens(
+                tokenAddress,
+                bigNumberAmount
+            )
+            await withdrawTx.wait()
         } catch (error) {
             console.log(error)
         }
     }
-    
 }
 
 async function createNewBet() {
-    const oracleType = document.querySelector('input[name="oracleType"]:checked').value;
+    const oracleType = document.querySelector(
+        'input[name="oracleType"]:checked'
+    ).value
     let oracleTypeEnum
-    if(oracleType === 'chainlinkButton'){
+    if (oracleType === "chainlinkButton") {
         oracleTypeEnum = 0
-    } else if(oracleType === 'uniswapButton') oracleTypeEnum = 1
+    } else if (oracleType === "uniswapButton") oracleTypeEnum = 1
     const skinTokenAddress = document.getElementById("skintokenAddress").value
     const betAmount = document.getElementById("betAmount").value
     const oracleAddressMain = document.getElementById("oracleAddressMain").value
@@ -156,36 +199,52 @@ async function createNewBet() {
     const priceline = document.getElementById("priceline").value
     const comparator = document.getElementById("comparator").value
     let comparatorEnum
-    if(comparator === '>'){
+    if (comparator === ">") {
         comparatorEnum = 0
-    } else if(comparator === '='){
+    } else if (comparator === "=") {
         comparatorEnum = 1
-    }
-    else if(comparator === '<') comparatorEnum = 2
-    
-    if (typeof window.ethereum != undefined){
+    } else if (comparator === "<") comparatorEnum = 2
+
+    if (typeof window.ethereum != undefined) {
         //Finds node endpoint in Metamask
         const provider = new ethers.providers.Web3Provider(window.ethereum)
         const signer = provider.getSigner()
-        const tokenDecimals = await new ethers.Contract(skinTokenAddress, erc20_abi, signer).decimals()
+        const tokenDecimals = await new ethers.Contract(
+            skinTokenAddress,
+            erc20_abi,
+            signer
+        ).decimals()
         //convert from human readable to bigNumber
-        const bigNumberAmount = ethers.utils.parseUnits(betAmount, tokenDecimals)
+        const bigNumberAmount = ethers.utils.parseUnits(
+            betAmount,
+            tokenDecimals
+        )
         console.log(`Betting ${betAmount} of ${skinTokenAddress}`)
         const contract = new ethers.Contract(contractAddress, abi, signer)
         try {
-            const newBetTx = await contract.betWithUserBalance(takerAddress, skinTokenAddress, bigNumberAmount, time, oracleAddressMain,
-                oracleAddressTwo, oracleTypeEnum, uniFeePool, priceline, comparatorEnum)
-            await newBetTx.wait() 
+            const newBetTx = await contract.betWithUserBalance(
+                takerAddress,
+                skinTokenAddress,
+                bigNumberAmount,
+                time,
+                oracleAddressMain,
+                oracleAddressTwo,
+                oracleTypeEnum,
+                uniFeePool,
+                priceline,
+                comparatorEnum
+            )
+            await newBetTx.wait()
         } catch (error) {
             console.log(error)
         }
     }
 }
 
-async function chainlinkOracle(){
+async function chainlinkOracle() {
     const oracleAddress = document.getElementById("chainlinkOracle").value
     const currentPrice = document.getElementById("chainlinkPrice")
-    if (typeof window.ethereum != undefined){
+    if (typeof window.ethereum != undefined) {
         //Finds node endpoint in Metamask
         const provider = new ethers.providers.Web3Provider(window.ethereum)
         const signer = provider.getSigner()
@@ -203,7 +262,7 @@ async function chainlinkOracle(){
 
 async function makerCancelBet() {
     const betNumberKill = document.getElementById("betNumberKill").value
-    if (typeof window.ethereum != undefined){
+    if (typeof window.ethereum != undefined) {
         //Finds node endpoint in Metamask
         const provider = new ethers.providers.Web3Provider(window.ethereum)
         const signer = provider.getSigner()
@@ -221,7 +280,7 @@ async function makerCancelBet() {
 async function queryBet() {
     const betNumber = document.getElementById("betNumberQuery").value
     const betQueryResults = document.getElementById("betQueryResults")
-    if (typeof window.ethereum != undefined){
+    if (typeof window.ethereum != undefined) {
         //Finds node endpoint in Metamask
         const provider = new ethers.providers.Web3Provider(window.ethereum)
         const signer = provider.getSigner()
@@ -240,7 +299,7 @@ async function queryBet() {
 async function acceptBet() {
     const amount = document.getElementById("acceptBetAmount").value
     const betNumber = document.getElementById("acceptBetNumber").value
-    if (typeof window.ethereum != undefined){
+    if (typeof window.ethereum != undefined) {
         //Finds node endpoint in Metamask
         const provider = new ethers.providers.Web3Provider(window.ethereum)
         const signer = provider.getSigner()
@@ -248,12 +307,19 @@ async function acceptBet() {
         const betData = await contract.AllBets(betNumber)
         const addresses = betData.betAddresses
         //convert amount from human readable to bignumber
-        const tokenDecimals = await new ethers.Contract(addresses.SkinToken, erc20_abi, signer).decimals()
+        const tokenDecimals = await new ethers.Contract(
+            addresses.SkinToken,
+            erc20_abi,
+            signer
+        ).decimals()
         const bigNumberAmount = ethers.utils.parseUnits(amount, tokenDecimals)
         console.log(`Accpeting bet ${betNumber} with ${amount} tokens`)
         try {
-            const acceptBetTx = await contract.acceptBetWithUserBalance(betNumber, bigNumberAmount)
-            await acceptBetTx.wait() 
+            const acceptBetTx = await contract.acceptBetWithUserBalance(
+                betNumber,
+                bigNumberAmount
+            )
+            await acceptBetTx.wait()
         } catch (error) {
             console.log(error)
         }
@@ -262,7 +328,7 @@ async function acceptBet() {
 
 async function closeBet() {
     const betNumber = document.getElementById("closeBetNumber").value
-    if (typeof window.ethereum != undefined){
+    if (typeof window.ethereum != undefined) {
         //Finds node endpoint in Metamask
         const provider = new ethers.providers.Web3Provider(window.ethereum)
         const signer = provider.getSigner()
@@ -279,7 +345,7 @@ async function closeBet() {
 
 async function usersCancelBet() {
     const betNumber = document.getElementById("betNumberCancel").value
-    if (typeof window.ethereum != undefined){
+    if (typeof window.ethereum != undefined) {
         //Finds node endpoint in Metamask
         const provider = new ethers.providers.Web3Provider(window.ethereum)
         const signer = provider.getSigner()
@@ -299,21 +365,44 @@ async function uniswapPrice() {
     const addressTwo = document.getElementById("uniswapAddressTwo").value
     const feePool = document.getElementById("uniswapPoolFee").value
     const uniFactoryGoerli = "0x1F98431c8aD98523631AE4a59f267346ea31F984"
+    const currentPrice = document.getElementById("uniswapPrice")
     const twapInterval = 60
-    if (typeof window.ethereum != undefined){
+    if (typeof window.ethereum != undefined) {
         //Finds node endpoint in Metamask
         const provider = new ethers.providers.Web3Provider(window.ethereum)
         const signer = provider.getSigner()
         console.log(`checking Uniswap oracle price...`)
-        const uniLibContract = new ethers.Contract(uniContractAddress, uni_abi, signer)
+        const uniLibContract = new ethers.Contract(
+            uniContractAddress,
+            uni_abi,
+            signer
+        )
         //const contract = new ethers.Contract(contractAddress, abi, signer)
         try {
-            const addressZero = await uniLibContract.getToken0(uniFactoryGoerli, addressOne, addressTwo, feePool)
-            if(addressZero == addressOne) {addressOne = addressTwo}
-            const tokenZeroDecimals = await new ethers.Contract(addressZero, erc20_abi, signer).decimals()
-            const price = await uniLibContract.convertToHumanReadable(uniFactoryGoerli, addressZero, addressOne, feePool, twapInterval,
-                tokenZeroDecimals)
+            const addressZero = await uniLibContract.getToken0(
+                uniFactoryGoerli,
+                addressOne,
+                addressTwo,
+                feePool
+            )
+            if (addressZero == addressOne) {
+                addressOne = addressTwo
+            }
+            const tokenZeroDecimals = await new ethers.Contract(
+                addressZero,
+                erc20_abi,
+                signer
+            ).decimals()
+            const price = await uniLibContract.convertToHumanReadable(
+                uniFactoryGoerli,
+                addressZero,
+                addressOne,
+                feePool,
+                twapInterval,
+                tokenZeroDecimals
+            )
             console.log(price.toString())
+            currentPrice.innerHTML = `1 token of ${addressOne} costs ${price.toString()} tokens of ${addressZero}`
         } catch (error) {
             console.log(error)
         }
@@ -321,15 +410,19 @@ async function uniswapPrice() {
 }
 
 async function changeUniLibrary() {
-    const newUniLibraryAdr = document.getElementById("newUniLibraryAddress").value
-    if (typeof window.ethereum != undefined){
+    const newUniLibraryAdr = document.getElementById(
+        "newUniLibraryAddress"
+    ).value
+    if (typeof window.ethereum != undefined) {
         //Finds node endpoint in Metamask
         const provider = new ethers.providers.Web3Provider(window.ethereum)
         const signer = provider.getSigner()
         console.log(`Changing UniswapOracleLibrary...`)
         const contract = new ethers.Contract(contractAddress, abi, signer)
         try {
-            const changeLibTx = await contract.setUniswapOracleLibrary(newUniLibraryAdr)
+            const changeLibTx = await contract.setUniswapOracleLibrary(
+                newUniLibraryAdr
+            )
             console.log(changeLibTx)
         } catch (error) {
             console.log(error)
