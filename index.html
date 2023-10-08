@@ -4,10 +4,56 @@
     <img src="Pepe_Shades.jpg" width="600" height="300" style="vertical-align:top">
     <br>
     <head>
-        <title>Escargo - Imagine the Smell</title>
+        <title>Flex</title>
+        <style type=text/css>   
+            body   
+            {  
+            height: 125vh;  
+            margin-top: 80px;  
+            padding: 30px;  
+            background-size: cover;  
+            font-family: sans-serif;  
+            }  
+            header {  
+            background-color: rgb(28, 8, 117);  
+            position: fixed;  
+            left: 0;  
+            right: 0;  
+            top: 5px;  
+            height: 30px;  
+            display: flex;  
+            align-items: center;  
+            box-shadow: 0 0 25px 0 black;  
+            }  
+            header * {  
+            display: inline;  
+            }  
+            header li {  
+            margin: 20px;  
+            }  
+            header li a {  
+            color: rgb(252, 254, 254);  
+            text-decoration: none;  
+            }  
+     
+        </style> 
     </head>
 
     <body>
+        <header>
+        <nav><ul>  
+            <li>  
+            <a href="funding.html"> Funding </a>  
+            </li>  
+            <li>  
+            <a href="#"> Bet </a>  
+            </li>  
+            <li>  
+            <a href="#"> Dashboard </a>  
+            </li> 
+            </ul> 
+        </nav>
+    </header>
         Henlo! Time to bet!
         <br>
         <button id="connectButton">Connect Metamask</button>
