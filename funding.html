@@ -18,6 +18,15 @@
             <nav>
                 <ul>
                     <li>
+                        <a href="index.html"
+                            ><img
+                                src="./shutter_shades.png"
+                                width="40"
+                                height="20"
+                            />
+                        </a>
+                    </li>
+                    <li>
                         <a> Funding </a>
                     </li>
                     <li>
@@ -61,8 +70,8 @@
                                 out += `
                     <tr>
                         <td style="vertical-align:middle"><img src=${token.img} width="25" height="25" ></img>  ${token.ticker}</td>
-                        <td id="availableBalance${token.ticker}">Connect Wallet</td>
-                        <td id="escrowedBalance${token.ticker}">Connect Wallet</td>
+                        <td id="availableBalance${token.address}">Connect Wallet</td>
+                        <td id="escrowedBalance${token.address}">Connect Wallet</td>
                     </tr>
                     `
                             }
@@ -98,23 +107,17 @@
                             })
                     </script>
                 </select>
-                <input type="amount" id="depositAmount" placeholder="0" />
+                <input type="amount" id="amount" placeholder="0" />
+                <button class="btn-max" id="maxWithdraw">Max</button>
             </div>
 
-            <button class="btn" id="tokenDepositButton">Deposit</button>
+            <button class="btn" id="depositButton">Deposit</button>
+            <button class="btn" id="withdrawButton">Withdraw</button>
         </section>
 
         <div class="overlay hidden"></div>
-        <button class=".btn-open" id="depositButton">Fund</button>
-        <button type="button" id="withdrawButton">Withdraw</button>
-
-        <br /><br />
-        <br /><strong>Withdraw Tokens</strong><br />
-        <label for="withdrawPrompt">Withdraw Amount</label>
-        <input id="withdrawAmount" placeholder="0.1" type="number" />
-        <label for="withdrawAddressPrompt">Token Address</label>
-        <input id="withdrawTokenAddress" placeholder="0x..." />
-        <button type="button" id="tokenWithdrawalButton">Withdraw</button>
+        <button class=".btn-open" id="depositModalButton">Fund</button>
+        <button class=".btn-open" id="withdrawModalButton">Withdraw</button>
     </body>
     <script src="./funding.js" type="module"></script>
 </html>

@@ -4,29 +4,50 @@ import { abi, contractAddress } from "./constants.js"
 import { erc20_abi } from "./erc20-abi.js"
 
 const connectButton = document.getElementById("connectButton")
-const fundButton = document.getElementById("tokenDepositButton")
-const withdrawButton = document.getElementById("tokenWithdrawalButton")
+const depositModalButton = document.getElementById("depositModalButton")
+const withdrawModalButton = document.getElementById("withdrawModalButton")
+const withdrawButton = document.getElementById("withdrawButton")
 const depositButton = document.getElementById("depositButton")
+const maxButton = document.getElementById("maxWithdraw")
 
 const modal = document.querySelector(".modal")
 const overlay = document.querySelector(".overlay")
 const closeModalBtn = document.querySelector(".btn-close")
 
+depositModalButton.disabled = true
+withdrawModalButton.disabled = true
 depositButton.disabled = true
+withdrawButton.disabled = true
 connectButton.onclick = connect
-fundButton.onclick = fundTokens
+depositButton.onclick = fundTokens
 withdrawButton.onclick = withdrawTokens
-depositButton.onclick = openModal
+depositModalButton.onclick = openDepositModal
+withdrawModalButton.onclick = openWithdrawalModal
+maxButton.onclick = getMax
 closeModalBtn.addEventListener("click", closeModal)
 
-function openModal() {
+function openDepositModal() {
+    console.log("Deposit Clicked")
     modal.classList.remove("hidden")
     overlay.classList.remove("hidden")
+    depositButton.disabled = false
+    maxButton.disabled = true
+}
+
+function openWithdrawalModal() {
+    console.log("Withdraw Clicked")
+    modal.classList.remove("hidden")
+    overlay.classList.remove("hidden")
+    withdrawButton.disabled = false
+    maxButton.disabled = false
 }
 
 function closeModal() {
     modal.classList.add("hidden")
     overlay.classList.add("hidden")
+    depositButton.disabled = true
+    withdrawButton.disabled = true
+    document.getElementById("amount").value = "0"
 }
 
 async function connect() {
@@ -53,11 +74,11 @@ async function connect() {
                         token.decimals
                     )
                     const availableBalance = document.getElementById(
-                        `availableBalance${token.ticker}`
+                        `availableBalance${token.address}`
                     )
                     availableBalance.innerText = `${balance[0]}`
                     const escrowedBalance = document.getElementById(
-                        `escrowedBalance${token.ticker}`
+                        `escrowedBalance${token.address}`
                     )
                     escrowedBalance.innerText = `${balance[1]}`
                 }
@@ -93,11 +114,22 @@ async function getBalance(address, decimals) {
 }
 
 const disableButton = () => {
-    depositButton.disabled = false
+    depositModalButton.disabled = false
+    withdrawModalButton.disabled = false
+}
+
+function getMax() {
+    const tokenAddress = document.getElementById("tokens").value
+    const availableBalance = document.getElementById(
+        `availableBalance${tokenAddress}`
+    )
+    console.log(availableBalance.innerText)
+    const amount = document.getElementById("amount")
+    amount.value = availableBalance.innerText
 }
 
 async function fundTokens() {
-    const amount = document.getElementById("depositAmount").value
+    const amount = document.getElementById("amount").value
     const tokenAddress = document.getElementById("tokens").value
     console.log(`Checking erc20 allowance of ${tokenAddress}`)
     if (typeof window.ethereum != undefined) {
@@ -169,8 +201,8 @@ async function checkAndSetAllowance(
 }
 
 async function withdrawTokens() {
-    const amount = document.getElementById("withdrawAmount").value
-    const tokenAddress = document.getElementById("withdrawTokenAddress").value
+    const amount = document.getElementById("amount").value
+    const tokenAddress = document.getElementById("tokens").value
     if (typeof window.ethereum != undefined) {
         //Finds node endpoint in Metamask
         const provider = new ethers.providers.Web3Provider(window.ethereum)
