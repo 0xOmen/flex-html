@@ -24,7 +24,7 @@ font-family: "Inter", sans-serif;
 }
 
 header {  
-background-color: rgb(28, 8, 117);  
+background-color: rgb(250, 7, 226);  
 position: fixed;  
 left: 0;  
 right: 0;  
@@ -35,18 +35,18 @@ align-items: center;
 box-shadow: 0 0 25px 0 black;  
 }  
 header * {  
-display: inline;  
+display: inline; 
 }  
 header li {  
 margin: 20px;  
 }  
 header li a {  
 color: rgb(252, 254, 254);  
-text-decoration: none;  
+text-decoration: none; 
 } 
 th {
-background-color: #5572f4;
-color: white;
+background-color: rgb(185,103,255);
+color: rgb(5,255,161);
 }
 tr:hover {background-color: rgb(88, 233, 95);}
 td {vertical-align: middle;}
@@ -60,7 +60,9 @@ width: 450px;
 padding: 1.3rem;
 min-height: 250px;
 position: absolute;
-top: 20%;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
 background-color: rgb(25, 33, 52) !important;
     background: rgb(25, 33, 52);
     background: linear-gradient(
@@ -94,8 +96,13 @@ margin: 0.4rem 0 0.2rem;
 
 button {
 cursor: pointer;
+padding: 0.2rem 0.7rem;
 border: 1px solid #ddd;
 font-weight: 600;
+background-color: rgb(185,103,255);
+    color: rgb(5,255,161);
+border-radius: 5px;
+    text-align: center;
 }
 
 .btn {

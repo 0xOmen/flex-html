@@ -26,6 +26,25 @@ withdrawModalButton.onclick = openWithdrawalModal
 maxButton.onclick = getMax
 closeModalBtn.addEventListener("click", closeModal)
 
+window.onload = (event) => {
+    isConnected()
+}
+
+async function isConnected() {
+    const accounts = await ethereum.request({ method: "eth_accounts" })
+    if (accounts.length) {
+        console.log(`You're connected to: ${accounts[0]}`)
+        connectButton.innerHTML = `${accounts[0].substring(
+            0,
+            6
+        )}...${accounts[0].substring(38, 43)} Connected`
+        populateBalances()
+        disableButton()
+    } else {
+        console.log("Metamask is not connected")
+    }
+}
+
 function openDepositModal() {
     console.log("Deposit Clicked")
     modal.classList.remove("hidden")
@@ -63,30 +82,31 @@ async function connect() {
         connectButton.innerHTML = accountConnected
         console.log("Metamask connected")
 
-        fetch("tokenList.json")
-            .then(function (response) {
-                return response.json()
-            })
-            .then(async function (tokens) {
-                for (let token of tokens) {
-                    const balance = await getBalance(
-                        token.address,
-                        token.decimals
-                    )
-                    const availableBalance = document.getElementById(
-                        `availableBalance${token.address}`
-                    )
-                    availableBalance.innerText = `${balance[0]}`
-                    const escrowedBalance = document.getElementById(
-                        `escrowedBalance${token.address}`
-                    )
-                    escrowedBalance.innerText = `${balance[1]}`
-                }
-            })
+        populateBalances()
         disableButton()
     } else {
         connectButton.innerHTML = "Metamask not found"
     }
+}
+
+async function populateBalances() {
+    fetch("tokenList.json")
+        .then(function (response) {
+            return response.json()
+        })
+        .then(async function (tokens) {
+            for (let token of tokens) {
+                const balance = await getBalance(token.address, token.decimals)
+                const availableBalance = document.getElementById(
+                    `availableBalance${token.address}`
+                )
+                availableBalance.innerText = `${balance[0]}`
+                const escrowedBalance = document.getElementById(
+                    `escrowedBalance${token.address}`
+                )
+                escrowedBalance.innerText = `${balance[1]}`
+            }
+        })
 }
 
 async function getBalance(address, decimals) {
