@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+
+<html>
+    <img
+        src="Pepe_Shades.jpg"
+        width="600"
+        height="300"
+        style="vertical-align: top"
+    />
+    <br />
+    <head>
+        <title>Flex</title>
+        <link rel="stylesheet" href="./funding.css" />
+    </head>
+
+    <body>
+        <header>
+            <nav>
+                <ul>
+                    <li>
+                        <a href="index.html"
+                            ><img
+                                src="./shutter_shades.png"
+                                width="40"
+                                height="20"
+                            />
+                        </a>
+                    </li>
+                    <li>
+                        <a> Funding </a>
+                    </li>
+                    <li>
+                        <a href="bet.html"> Bet </a>
+                    </li>
+                    <li>
+                        <a href="dashboard.html"> Dashboard </a>
+                    </li>
+                </ul>
+            </nav>
+            <button
+                id="connectButton"
+                type="button"
+                style="position: absolute; right: 0"
+            >
+                Connect Metamask
+            </button>
+        </header>
+        <br />
+        Deposit funds to Flex
+        <br />
+        <table>
+            <thread>
+                <tr>
+                    <th>Token</th>
+                    <th>Available Balance</th>
+                    <th>Escrowed Balance</th>
+                </tr>
+            </thread>
+            <tbody id="data-output">
+                <script>
+                    fetch("tokenList.json")
+                        .then(function (response) {
+                            return response.json()
+                        })
+                        .then(async function (tokens) {
+                            let placeholder =
+                                document.querySelector("#data-output")
+                            let out = ""
+                            for (let token of tokens) {
+                                out += `
+                    <tr>
+                        <td style="vertical-align:middle"><img src=${token.img} width="25" height="25" ></img>  ${token.ticker}</td>
+                        <td id="availableBalance${token.address}">Connect Wallet</td>
+                        <td id="escrowedBalance${token.address}">Connect Wallet</td>
+                    </tr>
+                    `
+                            }
+                            placeholder.innerHTML = out
+                        })
+                </script>
+            </tbody>
+        </table>
+
+        <section class="modal hidden">
+            <div class="flex">
+                <button class="btn-close">⨉</button>
+            </div>
+            <div>
+                <h3>Deposit to Flex</h3>
+
+                <select name="tokens" id="tokens">
+                    <script>
+                        fetch("tokenList.json")
+                            .then(function (response) {
+                                return response.json()
+                            })
+                            .then(async function (tokens) {
+                                let placeholder =
+                                    document.querySelector("#tokens")
+                                let out = ""
+                                for (let token of tokens) {
+                                    out += `
+                                <option value="${token.address}">${token.ticker}</option>"
+                                `
+                                }
+                                placeholder.innerHTML = out
+                            })
+                    </script>
+                </select>
+                <input type="amount" id="amount" placeholder="0" />
+                <button class="btn-max" id="maxWithdraw">Max</button>
+            </div>
+
+            <button class="btn" id="depositButton">Deposit</button>
+            <button class="btn" id="withdrawButton">Withdraw</button>
+        </section>
+
+        <div class="overlay hidden"></div>
+        <button class=".btn-open" id="depositModalButton">Fund</button>
+        <button class=".btn-open" id="withdrawModalButton">Withdraw</button>
+    </body>
+    <script src="./funding.js" type="module"></script>
+</html>

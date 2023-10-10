@@ -5,29 +5,21 @@ import { erc20_abi } from "./erc20-abi.js"
 import { uniContractAddress, uni_abi } from "./uniswapTWAPOracleLib-abi.js"
 
 const connectButton = document.getElementById("connectButton")
-const fundButton = document.getElementById("tokenDepositButton")
-const withdrawButton = document.getElementById("tokenWithdrawalButton")
-const createNewBetButton = document.getElementById("createNewBetButton")
 const chainlinkOracleButton = document.getElementById("chainlinkOracleButton")
 const killBetNumberButton = document.getElementById("killBetNumberButton")
 const betNumberQueryButton = document.getElementById("betNumberQueryButton")
 const acceptBetNumberButton = document.getElementById("acceptBetNumberButton")
 const closeBetNumberButton = document.getElementById("closeBetNumberButton")
-const getBalanceButton = document.getElementById("getBalanceButton")
 const cancelBetNumberButton = document.getElementById("cancelBetNumberButton")
 const uniswapOracleButton = document.getElementById("uniswapOracleButton")
 const changeUniLibraryButton = document.getElementById("changeUniLibraryButton")
-chainlinkOracleButton
+
 connectButton.onclick = connect
-fundButton.onclick = fundTokens
-withdrawButton.onclick = withdrawTokens
-createNewBetButton.onclick = createNewBet
 chainlinkOracleButton.onclick = chainlinkOracle
 killBetNumberButton.onclick = makerCancelBet
 betNumberQueryButton.onclick = queryBet
 acceptBetNumberButton.onclick = acceptBet
 closeBetNumberButton.onclick = closeBet
-getBalanceButton.onclick = getBalance
 cancelBetNumberButton.onclick = usersCancelBet
 uniswapOracleButton.onclick = uniswapPrice
 changeUniLibraryButton.onclick = changeUniLibrary

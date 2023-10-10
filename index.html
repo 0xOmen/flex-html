@@ -1,132 +1,121 @@
 <!DOCTYPE html>
 
 <html>
-    <img src="Pepe_Shades.jpg" width="600" height="300" style="vertical-align:top">
-    <br>
+    <img
+        src="Pepe_Shades.jpg"
+        width="600"
+        height="300"
+        style="vertical-align: top"
+    />
+    <br />
     <head>
-        <title>Escargo - Imagine the Smell</title>
+        <title>Flex</title>
+        <link rel="stylesheet" href="./funding.css" />
     </head>
 
     <body>
-        Henlo! Time to bet!
-        <br>
-        <button id="connectButton">Connect Metamask</button>
-        <br>
-        <label for="tokenBalanceIDPrompt">Token Address</label>
-        <input id="tokenBalanceID" placeholder="0x..."/>
-        <button id="getBalanceButton">Get User Balance</button>
-        <label >Available Tokens: </label>
-        <label id="availableTokensField" >0.000</label>
-        <label >Tokens in Bets: </label>
-        <label id="escrowedTokensField" >0.000</label>
-        
-        <br><br>
-        Goerli wETH token address: 0xb4fbf271143f4fbf7b91a5ded31805e42b2208d6<br>
-        Goerli USDC token address: 0x07865c6e87b9f70255377e024ace6630c1eaa37f<br>
-        Goerli Chainlink token address: 0x326C977E6efc84E512bB9C30f76E30c160eD06FB<br>
-        Goerli Uniswap token address: 0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984<br>
-        <br><strong>Deposit Tokens</strong><br>
-        <label for="tokenDepositAmount">Token Amount</label>
-        <input id="depositAmount" placeholder="0.1" type="number"/>
-        <label for="tokenAddress">Token Address</label>
-        <input id="depositTokenAddress" placeholder="0x..."/>
-        <button type="button" id="tokenDepositButton" > Fund </button>
-        <br><strong>Withdraw Tokens</strong><br>
-        <label for="withdrawPrompt">Withdraw Amount</label>
-        <input id="withdrawAmount" placeholder="0.1" type="number"/>
-        <label for="withdrawAddressPrompt">Token Address</label>
-        <input id="withdrawTokenAddress" placeholder="0x..."/>
-        <button type="button" id="tokenWithdrawalButton" > Withdraw </button>
-        <br><br>
-        <strong>Create New Bet:</strong>
-        <br>
-        <fieldset>
-            <legend>Chainlink or Uniswap oracle?</legend>
-            <div>
-              <input type="radio" id="chainlinkButton" name="oracleType" value="chainlinkButton" checked />
-              <label for="chainlinkButton">Chainlink</label>
-              <input type="radio" id="uniswapButton" name="oracleType" value="uniswapButton" />
-              <label for="uniswapButton">UniswapV3</label>
-            </div>
-        </fieldset>
-        <label for="skinTokenAddressPrompt">SkinToken Address</label>
-        <input id="skintokenAddress" placeholder="0x..."/><br>
-        <label for="betAmountPrompt">Bet Amount</label>
-        <input id="betAmount" placeholder="0.1" type="number"/><br>
-        <label for="oracleAddressMainPrompt">Oracle Address Main</label>
-        <input id="oracleAddressMain" placeholder="0x..."/><br>
-        <label for="oracleAddressTwoPrompt">Oracle Address2</label>
-        <input id="oracleAddressTwo" placeholder="0x..."/><br>
-        <label for="takerAddressPrompt">Taker Address</label>
-        <input id="takerAddress" placeholder="0x..."/><br>
-        <label for="timePrompt">Seconds in Bet</label>
-        <input id="time" placeholder="0x..." type="number"/><br>
-        <label for="uniFeePoolPrompt">Uniswap Fee Pool</label>
-        <input id="uniFeePool" placeholder="3000" type="number"/><br>
-        <label for="pricelinePrompt">Priceline</label>
-        <input id="priceline" placeholder="10000" type="number"/><br>
-        <label for="comparatorPrompt">Greater than, Less Than or Equal to priceline?</label>
-        <input id="comparator" placeholder='>,&lt;,='/><br>
-        
-        <button type="button" id="createNewBetButton" > Create Bet </button>
-        <br><br>
+        <header>
+            <nav>
+                <ul>
+                    <li>
+                        <a href="index.html"
+                            ><img
+                                src="./shutter_shades.png"
+                                width="40"
+                                height="20"
+                            />
+                        </a>
+                    </li>
+                    <li>
+                        <a href="funding.html"> Funding </a>
+                    </li>
+                    <li>
+                        <a href="bet.html"> Bet </a>
+                    </li>
+                    <li>
+                        <a href="#"> Dashboard </a>
+                    </li>
+                </ul>
+            </nav>
+            <button
+                id="connectButton"
+                type="button"
+                style="position: absolute; right: 0"
+            >
+                Connect Metamask
+            </button>
+        </header>
+        <strong>Flex </strong> <br />
+        <strong> ...on your friends </strong> <br />
+        <strong> ...on your enemies </strong> <br />
+        <strong> ...on the world </strong> <br />
+        <br /><br />
+
         <strong>Accpet Bet:</strong>
-        <br>
+        <br />
         <label for="acceptBetPrompt">Bet Number</label>
-        <input id="acceptBetNumber" placeholder="1" type="number"/>
+        <input id="acceptBetNumber" placeholder="1" type="number" />
         <label for="acceptBetAmountPrompt">Bet Amount</label>
-        <input id="acceptBetAmount" placeholder="0.1" type="number"/><br>
-        <button type="button" id="acceptBetNumberButton" > Accept Bet </button>
-        <br><br>
+        <input id="acceptBetAmount" placeholder="0.1" type="number" /><br />
+        <button type="button" id="acceptBetNumberButton">Accept Bet</button>
+        <br /><br />
         <strong>Close Bet:</strong>
-        <br>
+        <br />
         <label for="closeBetPrompt">Bet Number</label>
-        <input id="closeBetNumber" placeholder="1" type="number"/>
-        <button type="button" id="closeBetNumberButton" > Close Bet </button>
-        
-        <br><br>
+        <input id="closeBetNumber" placeholder="1" type="number" />
+        <button type="button" id="closeBetNumberButton">Close Bet</button>
+
+        <br /><br />
         <strong>Kill Bet </strong>(Taker cannot have accepted):
-        <br>
+        <br />
         <label for="betNumberKillPrompt">Bet Number</label>
-        <input id="betNumberKill" placeholder="1" type="number"/>
-        <button type="button" id="killBetNumberButton" > Kill Bet </button>
-        <br><br>
+        <input id="betNumberKill" placeholder="1" type="number" />
+        <button type="button" id="killBetNumberButton">Kill Bet</button>
+        <br /><br />
         <strong>Cancel Bet </strong>(Maker and Taker must approve):
-        <br>
+        <br />
         <label for="betNumberCancelPrompt">Bet Number</label>
-        <input id="betNumberCancel" placeholder="1" type="number"/>
-        <button type="button" id="cancelBetNumberButton" > Request Bet Cancel</button>
-        <br>
+        <input id="betNumberCancel" placeholder="1" type="number" />
+        <button type="button" id="cancelBetNumberButton">
+            Request Bet Cancel
+        </button>
+        <br />
         Query Bet:
-        <br>
+        <br />
         <label for="betNumberQueryPrompt">Bet Number</label>
-        <input id="betNumberQuery" placeholder="1" type="number"/>
-        <button type="button" id="betNumberQueryButton" > Query Bet </button>
-        <br>
+        <input id="betNumberQuery" placeholder="1" type="number" />
+        <button type="button" id="betNumberQueryButton">Query Bet</button>
+        <br />
         <label id="betQueryResults">...</label>
-        <br>
-        <strong>Get Chainlink Price</strong> (ETH/USD(Goerli): 0xD4a33860578De61DBAbDc8BFdb98FD742fA7028e):
-        <br>
+        <br />
+        <strong>Get Chainlink Price</strong> (ETH/USD(Goerli):
+        0xD4a33860578De61DBAbDc8BFdb98FD742fA7028e):
+        <br />
         <label for="chainlinkOraclePrompt">Chainlink Oracle</label>
-        <input id="chainlinkOracle" placeholder="0x..."/>
-        <button type="button" id="chainlinkOracleButton" > Get Most Recent Data </button>
+        <input id="chainlinkOracle" placeholder="0x..." />
+        <button type="button" id="chainlinkOracleButton">
+            Get Most Recent Data
+        </button>
         <label id="chainlinkPrice"></label>
-        <br>
-        <strong>Get Uniswap Price:</strong> 
-        <br>
+        <br />
+        <strong>Get Uniswap Price:</strong>
+        <br />
         <label for="uniswapOraclePromptOne">Token 1 address:</label>
-        <input id="uniswapAddressOne" placeholder="0x..."/>
+        <input id="uniswapAddressOne" placeholder="0x..." />
         <label for="uniswapOraclePromptTwo">Token 2 address:</label>
-        <input id="uniswapAddressTwo" placeholder="0x..."/>
+        <input id="uniswapAddressTwo" placeholder="0x..." />
         <label for="uniswapFeePrompt">Pool Swap Fee:</label>
-        <input id="uniswapPoolFee" placeholder="3000" type="number"/>
-        <button type="button" id="uniswapOracleButton" > Get Most Recent Data </button>
+        <input id="uniswapPoolFee" placeholder="3000" type="number" />
+        <button type="button" id="uniswapOracleButton">
+            Get Most Recent Data
+        </button>
         <label id="uniswapPrice"></label>
-        <br><br>
+        <br /><br />
         <label for="changeUniLibraryPrompt">New Uni Library: </label>
-        <input id="newUniLibraryAddress" placeholder="0x..."/>
-        <button type="button" id="changeUniLibraryButton" > Change Uni Library </button>
-        
+        <input id="newUniLibraryAddress" placeholder="0x..." />
+        <button type="button" id="changeUniLibraryButton">
+            Change Uni Library
+        </button>
     </body>
     <script src="./index.js" type="module"></script>
 </html>

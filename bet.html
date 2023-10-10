@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Flex</title>
+        <link rel="stylesheet" href="./funding.css" />
+    </head>
+
+    <body>
+        <header>
+            <nav>
+                <ul>
+                    <li>
+                        <a href="index.html"
+                            ><img
+                                src="./shutter_shades.png"
+                                width="40"
+                                height="20"
+                            />
+                        </a>
+                    </li>
+                    <li>
+                        <a href="funding.html"> Funding </a>
+                    </li>
+                    <li>
+                        <a href="bet.html"> Bet </a>
+                    </li>
+                    <li>
+                        <a href="#"> Dashboard </a>
+                    </li>
+                </ul>
+            </nav>
+            <button
+                id="connectButton"
+                class="button"
+                style="position: absolute; right: 0"
+            >
+                Connect Metamask
+            </button>
+        </header>
+
+        <section class="modal">
+            <div>
+                <h3>What oracle do you want to Flex with?</h3>
+            </div>
+            <button class="btn" id="chainlinkButton" >
+                <img src="chainlink-link-logo.png"width="25" height="25" ></img>  
+                Chainlink
+            </button>
+            <button class="btn" id="uniswapButton">
+                <img src="Uniswap_Logo.png"width="100" height="25" ></img>
+            </button>
+        </section>
+
+        <section class="modal hidden" id="chainlinkModal">
+            <div class="flex">
+                <button class="btn-close" id="chainlinkBack">&larr;</button>
+            </div>
+            <div>
+                <h3>What's your Flex?</h3>
+                <select name="chainlinkFeeds" id="chainlinkFeed">
+                    <option value="0xD4a33860578De61DBAbDc8BFdb98FD742fA7028e">ETH</option>"
+                    <option value="0xA39434A63A52E749F02807ae27335515BA4b07F7">BTC</option>"
+                    <option value="0x48731cF7e84dc94C5f84577882c14Be11a5B7456">LINK</option>"
+                    <option value="0x779877A7B0D9E8603169DdbD7836e478b4624789">BTC/ETH</option>"
+                    <option value="0x982B232303af1EFfB49939b81AD6866B2E4eeD0B">JPY/USD</option>"
+                    <option value="0x0d79df66BE487753B02D015Fb622DED7f0E9798d">DAI</option>
+                    <option value="0xD4a33860578De61DBAbDc8BFdb98FD742fA7028e0x982B232303af1EFfB49939b81AD6866B2E4eeD0B">ETH/JPY</option>"
+                </select>
+                <select name="comparator" id="comparator">
+                    <option value="greaterThan">> </option>"
+                    <option value="lessThan">&lt; </option>"
+                    <option value="equal">= </option>"
+                </select>
+                <input id="priceline" placeholder="0" />
+            </div>
+            <button class="btn" id="nextButton">Next</button>
+        </section>
+
+        <section class="modal hidden" id="uniswapModal">
+            <div class="flex">
+                <button class="btn-close" id="uniswapBack">&larr;</button>
+            </div>
+            <div>
+                <h3>What's your Flex?</h3>
+                <div>
+                    <input id="tokenA" placeholder="tokenA address 0x..." />
+                    <input id="tokenB" placeholder="tokenB address 0x..." />
+                </div>
+                Ratio A/B will be: 
+                <select name="comparator" id="uniComparator">
+                    <option value="greaterThan">> </option>"
+                    <option value="lessThan">&lt; </option>"
+                    <option value="equal">= </option>"
+                </select>
+                <input id="uniPriceline" placeholder="0" />
+            </div>
+            <button class="btn" id="uniNextButton">Next</button>
+        </section>
+
+        <section class="modal hidden" id="detailsModal">
+        <div class="flex">
+            <button class="btn-close" id="chainlinkDetailsBack">&larr;</button>
+        </div>
+            <div>
+                <h3>Counterparty Address?</h3>
+                <button class="button" id="specificButton">Specific Address</button>
+                <button class="button" id="anyoneButton">Anyone</button>
+                <input id="taker" placeholder="0x..." />
+            </div>
+            <div>
+                <h3>Bet Length</h3>
+                <input id="timeAmount" placeholder="0" />
+                <select name="timeUnits" id="timeUnits">
+                    <option value="hours">Hours</option>"
+                    <option value="days">Days</option>"
+                    <option value="years">Years</option>"
+                    <option value="seconds">Seconds</option>"
+                </select>
+            </div>
+            <button class="btn" id="nextButtonDetails">Next</button>
+        </section>
+
+        <section class="modal hidden" id="skinTokenModal">
+            <div class="flex">
+                <button class="btn-close" id="detailsBack">&larr;</button>
+            </div>
+            <div>
+                <h3>What's your wager?</h3>
+            </div>
+            <table>
+                <thread>
+                    <tr>
+                        <th>Token</th>
+                        <th>Available Balance</th>
+                    </tr>
+                </thread>
+                <tbody id="data-output">
+                    
+                </tbody>
+            </table>
+            <div>
+                <select name="skinToken" id="skinToken">
+                    <option value="0x07865c6e87b9f70255377e024ace6630c1eaa37f">USDC</option>"
+                    <option value="0xb4fbf271143f4fbf7b91a5ded31805e42b2208d6">ETH</option>"
+                    <option value="0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984">UNI</option>"
+                    <option value="0x326C977E6efc84E512bB9C30f76E30c160eD06FB">LINK</option>"
+                </select>
+                <input id="skinTokenAmount" placeholder="0" />
+            </div>
+            <button class="btn" id="makeBet">Create Bet</button>
+        </section>
+    </body>
+    <script src="./bet.js" type="module"></script>
+</html>
