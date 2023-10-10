@@ -4,23 +4,29 @@ import { erc20_abi } from "./erc20-abi.js"
 
 const connectButton = document.getElementById("connectButton")
 const chainlinkButton = document.getElementById("chainlinkButton")
+const uniswapButton = document.getElementById("uniswapButton")
 const chainlinkModal = document.getElementById("chainlinkModal")
+const uniswapModal = document.getElementById("uniswapModal")
 const chainlinkBack = document.getElementById("chainlinkBack")
+const uniswapBack = document.getElementById("uniswapBack")
 const specificButton = document.getElementById("specificButton")
 const anyoneButton = document.getElementById("anyoneButton")
 const takerField = document.getElementById("taker")
 const nextButton = document.getElementById("nextButton")
+const uniNextButton = document.getElementById("uniNextButton")
 const detailsModal = document.getElementById("detailsModal")
 const chainlinkDetailsBack = document.getElementById("chainlinkDetailsBack")
-const betline = document.getElementById("betline")
 const nextButtonDetails = document.getElementById("nextButtonDetails")
 const skinTokenModal = document.getElementById("skinTokenModal")
 const detailsBack = document.getElementById("detailsBack")
 const makeBetButton = document.getElementById("makeBet")
 
 chainlinkButton.onclick = openChainlinkModal
+uniswapButton.onclick = openUniswapModal
 chainlinkBack.onclick = closeChainlinkModal
+uniswapBack.onclick = closeUniswapModal
 nextButton.onclick = openDetailsModal
+uniNextButton.onclick = openDetailsModal
 chainlinkDetailsBack.onclick = closeDetailsModal
 nextButtonDetails.onclick = openSkintokenModal
 detailsBack.onclick = closeSkintokenModal
@@ -88,8 +94,17 @@ function closeChainlinkModal() {
     chainlinkModal.classList.add("hidden")
 }
 
+function openUniswapModal() {
+    uniswapModal.classList.remove("hidden")
+    oracleType = "uniswap"
+}
+
+function closeUniswapModal() {
+    uniswapModal.classList.add("hidden")
+}
+
 function openDetailsModal() {
-    if (priceline.value) {
+    if (priceline.value || uniPriceline.value) {
         detailsModal.classList.remove("hidden")
     }
 }
@@ -127,7 +142,7 @@ async function getBalance(address, decimals) {
 }
 
 async function makeBet() {
-    let oracleTypeEnum
+    let oracleTypeEnum, priceLine, comparator
     let uniFeePool
     let oracleAddressMain, oracleAddressTwo
     if (oracleType === "chainlink") {
@@ -141,18 +156,22 @@ async function makeBet() {
             oracleAddressTwo = "0x0000000000000000000000000000000000000000"
         }
         uniFeePool = 3000
-    } else if (oracleType === "uniswapButton") {
+
+        priceLine = document.getElementById("priceline").value
+        comparator = document.getElementById("comparator").value
+    } else if (oracleType === "uniswap") {
         oracleTypeEnum = 1
-        /*const oracleAddressMain = document.getElementById("chainlinkFeed").value
-        const oracleAddressTwo =
-            document.getElementById("oracleAddressTwo").value*/
+        oracleAddressMain = document.getElementById("tokenA").value
+        oracleAddressTwo = document.getElementById("tokenB").value
+        priceLine = document.getElementById("uniPriceline").value
+        comparator = document.getElementById("uniComparator").value
+        uniFeePool = 3000
     }
     console.log(`Main oracle: ${oracleAddressMain}`)
-    console.log(`Main oracle: ${oracleAddressTwo}`)
+    console.log(`second oracle: ${oracleAddressTwo}`)
     const skinTokenAddress = document.getElementById("skinToken").value
     const betAmount = document.getElementById("skinTokenAmount").value
     let takerAddress = document.getElementById("taker").value
-    console.log(`Taker Address: ${takerAddress}`)
     if (takerAddress === "") {
         takerAddress = "0x0000000000000000000000000000000000000000"
     }
@@ -169,8 +188,6 @@ async function makeBet() {
     } else {
         time = timeAmount
     }
-    const priceline = document.getElementById("priceline").value
-    const comparator = document.getElementById("comparator").value
     let comparatorEnum
     if (comparator === "greaterThan") {
         comparatorEnum = 0
@@ -194,6 +211,15 @@ async function makeBet() {
         )
         console.log(`Betting ${betAmount} of ${skinTokenAddress}`)
         const contract = new ethers.Contract(contractAddress, abi, signer)
+        console.log(
+            time,
+            oracleAddressMain,
+            oracleAddressTwo,
+            oracleTypeEnum,
+            uniFeePool,
+            priceLine,
+            comparatorEnum
+        )
         try {
             const newBetTx = await contract.betWithUserBalance(
                 takerAddress,
@@ -204,7 +230,7 @@ async function makeBet() {
                 oracleAddressTwo,
                 oracleTypeEnum,
                 uniFeePool,
-                priceline,
+                priceLine,
                 comparatorEnum
             )
             await newBetTx.wait()
