@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Flex</title>
+        <link rel="stylesheet" href="./funding.css" />
+    </head>
+
+    <body>
+        <header>
+            <nav>
+                <ul>
+                    <li>
+                        <a href="index.html"
+                            ><img
+                                src="./shutter_shades.png"
+                                width="40"
+                                height="20"
+                            />
+                        </a>
+                    </li>
+                    <li>
+                        <a href="funding.html"> Funding </a>
+                    </li>
+                    <li>
+                        <a href="bet.html"> Bet </a>
+                    </li>
+                    <li>
+                        <a href="dashboard.html"> Dashboard </a>
+                    </li>
+                </ul>
+            </nav>
+            <button
+                id="connectButton"
+                class="button"
+                style="position: absolute; right: 0"
+            >
+                Connect Metamask
+            </button>
+        </header>
+        <br /><br /><br />
+        <table>
+            <thread>
+                <tr>
+                    <th>Bet Number</th>
+                    <th>Status</th>
+                    <th>Counter Party</th>
+                    <th>Result</th>
+                </tr>
+            </thread>
+            <tbody id="data-output"></tbody>
+        </table>
+    </body>
+    <script src="./dashboard.js" type="module"></script>
+</html>

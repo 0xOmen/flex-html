@@ -1,4 +1,3 @@
-//import ethers from "front end file"
 import { ethers } from "./ethers-5.6.esm.min.js"
 import { abi, contractAddress } from "./constants.js"
 import { erc20_abi } from "./erc20-abi.js"
