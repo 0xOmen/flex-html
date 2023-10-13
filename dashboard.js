@@ -52,8 +52,8 @@ async function populateBets() {
         const contract = new ethers.Contract(contractAddress, abi, signer)
         let betOutput = ""
         try {
-            const contractBets = await contract.BetNumber()
-            for (let betNum = 6; betNum <= contractBets.toNumber(); betNum++) {
+            const totalBets = await contract.BetNumber()
+            for (let betNum = 1; betNum <= totalBets.toNumber(); betNum++) {
                 const betDetails = await contract.AllBets(betNum)
                 if (
                     betDetails[0][0] == userAddress ||
@@ -74,7 +74,7 @@ function getBetData(betNum, betDetails, userAddress) {
     if (betDetails[0][0] == userAddress) {
         counterParty = betDetails[0][1]
     } else {
-        counterParty = betDetails[(0)[0]]
+        counterParty = betDetails[0][0]
     }
     if (counterParty == "0x0000000000000000000000000000000000000000") {
         counterParty = "Anyone"
@@ -95,9 +95,7 @@ function getBetData(betNum, betDetails, userAddress) {
         status = "Mutually Killed"
         outcome = "Funds returned"
     }
-    console.log(`betNum = ${betNum}`)
-    console.log(`status = ${status}`)
-    console.log(`counterParty = ${counterParty}`)
+
     const answer = `<tr>
             <td > ${betNum}</td>
             <td >${status}</td>
