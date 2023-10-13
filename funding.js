@@ -15,8 +15,6 @@ const closeModalBtn = document.querySelector(".btn-close")
 
 depositModalButton.disabled = true
 withdrawModalButton.disabled = true
-depositButton.disabled = true
-withdrawButton.disabled = true
 connectButton.onclick = connect
 depositButton.onclick = fundTokens
 withdrawButton.onclick = withdrawTokens
@@ -37,8 +35,12 @@ async function isConnected() {
             0,
             6
         )}...${accounts[0].substring(38, 43)} Connected`
-        populateBalances()
-        disableButton()
+        const provider = new ethers.providers.Web3Provider(window.ethereum)
+        const { chainId } = await provider.getNetwork()
+        if (chainId == 5) {
+            populateBalances()
+            disableButton()
+        }
     } else {
         console.log("Metamask is not connected")
     }
@@ -48,23 +50,21 @@ function openDepositModal() {
     console.log("Deposit Clicked")
     modal.classList.remove("hidden")
     overlay.classList.remove("hidden")
-    depositButton.disabled = false
-    maxButton.disabled = true
+    depositButton.classList.remove("hidden")
 }
 
 function openWithdrawalModal() {
     console.log("Withdraw Clicked")
     modal.classList.remove("hidden")
     overlay.classList.remove("hidden")
-    withdrawButton.disabled = false
-    maxButton.disabled = false
+    withdrawButton.classList.remove("hidden")
 }
 
 function closeModal() {
     modal.classList.add("hidden")
     overlay.classList.add("hidden")
-    depositButton.disabled = true
-    withdrawButton.disabled = true
+    depositButton.classList.add("hidden")
+    withdrawButton.classList.add("hidden")
     document.getElementById("amount").value = "0"
 }
 
@@ -80,9 +80,11 @@ async function connect() {
         )}...${userAddress.substring(38, 43)} Connected`
         connectButton.innerHTML = accountConnected
         console.log("Metamask connected")
-
-        populateBalances()
-        disableButton()
+        const { chainId } = await provider.getNetwork()
+        if (chainId == 5) {
+            populateBalances()
+            disableButton()
+        }
     } else {
         connectButton.innerHTML = "Metamask not found"
     }

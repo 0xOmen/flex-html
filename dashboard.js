@@ -97,10 +97,10 @@ function getBetData(betNum, betDetails, userAddress) {
     }
 
     const answer = `<tr>
-            <td > ${betNum}</td>
-            <td >${status}</td>
-            <td >${counterParty}</td>
-            <td >${outcome}</td>
+            <td style="text-align: center"> ${betNum}</td>
+            <td style="text-align: center">${status}</td>
+            <td style="text-align: center">${counterParty}</td>
+            <td style="text-align: center">${outcome}</td>
         </tr>`
     return answer
 }
