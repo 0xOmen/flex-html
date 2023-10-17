@@ -304,12 +304,12 @@ async function acceptBet() {
             erc20_abi,
             signer
         ).decimals()
+        console.log("here")
         const bigNumberAmount = ethers.utils.parseUnits(amount, tokenDecimals)
         console.log(`Accpeting bet ${betNumber} with ${amount} tokens`)
         try {
             const acceptBetTx = await contract.acceptBetWithUserBalance(
-                betNumber,
-                bigNumberAmount
+                betNumber
             )
             await acceptBetTx.wait()
         } catch (error) {

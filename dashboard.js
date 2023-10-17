@@ -1,6 +1,5 @@
 import { ethers } from "./ethers-5.6.esm.min.js"
 import { abi, contractAddress } from "./constants.js"
-import { erc20_abi } from "./erc20-abi.js"
 
 const connectButton = document.getElementById("connectButton")
 const tableData = document.getElementById("data-output")
@@ -52,14 +51,18 @@ async function populateBets() {
         const contract = new ethers.Contract(contractAddress, abi, signer)
         let betOutput = ""
         try {
-            const totalBets = await contract.BetNumber()
-            for (let betNum = 1; betNum <= totalBets.toNumber(); betNum++) {
-                const betDetails = await contract.AllBets(betNum)
+            const userBets = await contract.getUserBets(userAddress)
+            for (let bets in userBets) {
+                const betDetails = await contract.AllBets(userBets[bets])
                 if (
                     betDetails[0][0] == userAddress ||
                     betDetails[0][1] == userAddress
                 ) {
-                    betOutput += getBetData(betNum, betDetails, userAddress)
+                    betOutput += getBetData(
+                        userBets[bets],
+                        betDetails,
+                        userAddress
+                    )
                 }
             }
             tableData.innerHTML = betOutput
@@ -90,8 +93,13 @@ function getBetData(betNum, betDetails, userAddress) {
         outcome = "Pending..."
     } else if (betDetails[3] == 3) {
         status = "Finished"
-        outcome = "Logic not Currently Available"
+        if (betDetails[0][0] == userAddress) outcome = "Flex on 'em, You won!"
+        else outcome = "Flex harder, You did not win"
     } else if (betDetails[3] == 4) {
+        status = "Finished"
+        if (betDetails[0][1] == userAddress) outcome = "Flex on 'em, You won!"
+        else outcome = "Flex harder, You did not win"
+    } else if (betDetails[3] == 5) {
         status = "Mutually Killed"
         outcome = "Funds returned"
     }
