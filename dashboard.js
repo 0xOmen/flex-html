@@ -3,8 +3,12 @@ import { abi, contractAddress } from "./constants.js"
 
 const connectButton = document.getElementById("connectButton")
 const tableData = document.getElementById("data-output")
+const closeBetNumberButton = document.getElementById("closeBetNumberButton")
+const acceptBetNumberButton = document.getElementById("acceptBetNumberButton")
 
 connectButton.onclick = connect
+closeBetNumberButton.onclick = closeBet
+acceptBetNumberButton.onclick = acceptBet
 
 window.onload = (event) => {
     isConnected()
@@ -89,8 +93,13 @@ function getBetData(betNum, betDetails, userAddress) {
         status = "Killed"
         outcome = "Funds returned"
     } else if (betDetails[3] == 2) {
-        status = "Awaiting Completion"
-        outcome = "Pending..."
+        if (betDetails[2].toNumber() < Math.floor(Date.now() / 1000)) {
+            status = "Ready to Close"
+            outcome = "Awaiting Close Transaction"
+        } else {
+            status = "Awaiting End Time"
+            outcome = "Pending..."
+        }
     } else if (betDetails[3] == 3) {
         status = "Finished"
         if (betDetails[0][0] == userAddress) outcome = "Flex on 'em, You won!"
@@ -111,4 +120,41 @@ function getBetData(betNum, betDetails, userAddress) {
             <td style="text-align: center">${outcome}</td>
         </tr>`
     return answer
+}
+
+async function closeBet() {
+    const betNumber = document.getElementById("closeBetNumber").value
+    if (typeof window.ethereum != undefined) {
+        //Finds node endpoint in Metamask
+        const provider = new ethers.providers.Web3Provider(window.ethereum)
+        const signer = provider.getSigner()
+        console.log(`Closing bet number:  ${betNumber}`)
+        const contract = new ethers.Contract(contractAddress, abi, signer)
+        try {
+            const closeBetTx = await contract.closeBet(betNumber)
+            console.log(closeBetTx)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+}
+
+async function acceptBet() {
+    const betNumber = document.getElementById("acceptBetNumber").value
+    if (typeof window.ethereum != undefined) {
+        //Finds node endpoint in Metamask
+        const provider = new ethers.providers.Web3Provider(window.ethereum)
+        const signer = provider.getSigner()
+        const contract = new ethers.Contract(contractAddress, abi, signer)
+
+        console.log(`Accpeting bet ${betNumber}`)
+        try {
+            const acceptBetTx = await contract.acceptBetWithUserBalance(
+                betNumber
+            )
+            await acceptBetTx.wait()
+        } catch (error) {
+            console.log(error)
+        }
+    }
 }
