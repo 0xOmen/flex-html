@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 
 <html>
+    <br /><br /><br />
     <img
         src="Pepe_Shades.jpg"
         width="600"
@@ -35,6 +36,9 @@
                     <li>
                         <a href="dashboard.html"> Dashboard </a>
                     </li>
+                    <li>
+                        <a href="advanced.html"> Advanced </a>
+                    </li>
                 </ul>
             </nav>
             <button
@@ -49,59 +53,6 @@
         <strong> ...on your friends </strong> <br />
         <strong> ...on your enemies </strong> <br />
         <strong> ...on the world </strong> <br />
-        <br /><br />
-
-        <br /><br />
-        <strong>Kill Bet </strong>(Taker cannot have accepted):
-        <br />
-        <label for="betNumberKillPrompt">Bet Number</label>
-        <input id="betNumberKill" placeholder="1" type="number" />
-        <button type="button" id="killBetNumberButton">Kill Bet</button>
-        <br /><br />
-        <strong>Cancel Bet </strong>(Maker and Taker must approve):
-        <br />
-        <label for="betNumberCancelPrompt">Bet Number</label>
-        <input id="betNumberCancel" placeholder="1" type="number" />
-        <button type="button" id="cancelBetNumberButton">
-            Request Bet Cancel
-        </button>
-        <br />
-        Query Bet:
-        <br />
-        <label for="betNumberQueryPrompt">Bet Number</label>
-        <input id="betNumberQuery" placeholder="1" type="number" />
-        <button type="button" id="betNumberQueryButton">Query Bet</button>
-        <br />
-        <label id="betQueryResults">...</label>
-        <br />
-        <strong>Get Chainlink Price</strong> (ETH/USD(Goerli):
-        0xD4a33860578De61DBAbDc8BFdb98FD742fA7028e):
-        <br />
-        <label for="chainlinkOraclePrompt">Chainlink Oracle</label>
-        <input id="chainlinkOracle" placeholder="0x..." />
-        <button type="button" id="chainlinkOracleButton">
-            Get Most Recent Data
-        </button>
-        <label id="chainlinkPrice"></label>
-        <br />
-        <strong>Get Uniswap Price:</strong>
-        <br />
-        <label for="uniswapOraclePromptOne">Token 1 address:</label>
-        <input id="uniswapAddressOne" placeholder="0x..." />
-        <label for="uniswapOraclePromptTwo">Token 2 address:</label>
-        <input id="uniswapAddressTwo" placeholder="0x..." />
-        <label for="uniswapFeePrompt">Pool Swap Fee:</label>
-        <input id="uniswapPoolFee" placeholder="3000" type="number" />
-        <button type="button" id="uniswapOracleButton">
-            Get Most Recent Data
-        </button>
-        <label id="uniswapPrice"></label>
-        <br /><br />
-        <label for="changeUniLibraryPrompt">New Uni Library: </label>
-        <input id="newUniLibraryAddress" placeholder="0x..." />
-        <button type="button" id="changeUniLibraryButton">
-            Change Uni Library
-        </button>
     </body>
     <script src="./index.js" type="module"></script>
 </html>

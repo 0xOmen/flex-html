@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Flex</title>
+        <link rel="stylesheet" href="./funding.css" />
+    </head>
+
+    <body>
+        <header>
+            <nav>
+                <ul>
+                    <li>
+                        <a href="index.html"
+                            ><img
+                                src="./shutter_shades.png"
+                                width="40"
+                                height="20"
+                            />
+                        </a>
+                    </li>
+                    <li>
+                        <a href="funding.html"> Funding </a>
+                    </li>
+                    <li>
+                        <a href="bet.html"> Bet </a>
+                    </li>
+                    <li>
+                        <a href="dashboard.html"> Dashboard </a>
+                    </li>
+                    <li>
+                        <a href="advanced.html"> Advanced </a>
+                    </li>
+                </ul>
+            </nav>
+            <button
+                id="connectButton"
+                class="button"
+                style="position: absolute; right: 0"
+            >
+                Connect Metamask
+            </button>
+        </header>
+        <br /><br /><br />
+
+        <strong>Kill Bet </strong>(Taker cannot have accepted):
+        <br />
+        <label for="betNumberKillPrompt">Bet Number</label>
+        <input id="betNumberKill" placeholder="1" type="number" />
+        <button type="button" id="killBetNumberButton">Kill Bet</button>
+        <br /><br />
+        <strong>Cancel Bet </strong>(Maker and Taker must approve): <br />
+        <label for="betNumberCancelPrompt">Bet Number</label>
+        <input id="betNumberCancel" placeholder="1" type="number" />
+        <button type="button" id="cancelBetNumberButton">
+            Request Bet Cancel
+        </button>
+        <br /><br />
+        Query Bet:
+        <br />
+        <label for="betNumberQueryPrompt">Bet Number</label>
+        <input id="betNumberQuery" placeholder="1" type="number" />
+        <button type="button" id="betNumberQueryButton">Query Bet</button>
+        <br />
+        <label id="betQueryResults">...</label>
+        <br />
+        <strong>Get Chainlink Price</strong> (ETH/USD(Goerli):
+        0xD4a33860578De61DBAbDc8BFdb98FD742fA7028e):
+        <br />
+        <label for="chainlinkOraclePrompt">Chainlink Oracle</label>
+        <input id="chainlinkOracle" placeholder="0x..." />
+        <button type="button" id="chainlinkOracleButton">
+            Get Most Recent Data
+        </button>
+        <label id="chainlinkPrice"></label>
+        <br />
+        <strong>Get Uniswap Price:</strong>
+        <br />
+        <label for="uniswapOraclePromptOne">Token 1 address:</label>
+        <input id="uniswapAddressOne" placeholder="0x..." />
+        <label for="uniswapOraclePromptTwo">Token 2 address:</label>
+        <input id="uniswapAddressTwo" placeholder="0x..." />
+        <label for="uniswapFeePrompt">Pool Swap Fee:</label>
+        <input id="uniswapPoolFee" placeholder="3000" type="number" />
+        <button type="button" id="uniswapOracleButton">
+            Get Most Recent Data
+        </button>
+        <label id="uniswapPrice"></label>
+        <br /><br />
+        <label for="changeUniLibraryPrompt">New Uni Library: </label>
+        <input id="newUniLibraryAddress" placeholder="0x..." />
+        <button type="button" id="changeUniLibraryButton">
+            Change Uni Library
+        </button>
+    </body>
+    <script src="./advanced.js" type="module"></script>
+</html>
