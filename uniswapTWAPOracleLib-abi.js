@@ -1,12 +1,5 @@
-export const uniContractAddress = "0x20ad155ea921FeDb706126f7BdC18007fA55A4ff"
+export const uniContractAddress = "0xDC4BA11C0Cd22A10CC468A42FFB58cF0540C36cB"
 export const uni_abi = [
-    {
-        inputs: [{ internalType: "int24", name: "_tick", type: "int24" }],
-        name: "convertTickToSqrtPriceX96",
-        outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-        stateMutability: "pure",
-        type: "function",
-    },
     {
         inputs: [
             { internalType: "address", name: "_factory", type: "address" },
@@ -14,7 +7,7 @@ export const uni_abi = [
             { internalType: "address", name: "_token1", type: "address" },
             { internalType: "uint24", name: "_fee", type: "uint24" },
             { internalType: "uint32", name: "_twapInterval", type: "uint32" },
-            { internalType: "uint8", name: "_token1Decimals", type: "uint8" },
+            { internalType: "uint8", name: "_token0Decimals", type: "uint8" },
         ],
         name: "convertToHumanReadable",
         outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
@@ -30,6 +23,29 @@ export const uni_abi = [
         ],
         name: "getPoolAddress",
         outputs: [{ internalType: "address", name: "", type: "address" }],
+        stateMutability: "view",
+        type: "function",
+    },
+    {
+        inputs: [
+            { internalType: "uint160", name: "sqrtPriceX96", type: "uint160" },
+        ],
+        name: "getPriceX96FromSqrtPriceX96",
+        outputs: [
+            { internalType: "uint256", name: "priceX96", type: "uint256" },
+        ],
+        stateMutability: "pure",
+        type: "function",
+    },
+    {
+        inputs: [
+            { internalType: "address", name: "uniswapV3Pool", type: "address" },
+            { internalType: "uint32", name: "twapInterval", type: "uint32" },
+        ],
+        name: "getSqrtTwapX96",
+        outputs: [
+            { internalType: "uint160", name: "sqrtPriceX96", type: "uint160" },
+        ],
         stateMutability: "view",
         type: "function",
     },
@@ -52,29 +68,6 @@ export const uni_abi = [
         name: "getToken0FromPool",
         outputs: [{ internalType: "address", name: "", type: "address" }],
         stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [
-            { internalType: "address", name: "_factory", type: "address" },
-            { internalType: "address", name: "_token0", type: "address" },
-            { internalType: "address", name: "_token1", type: "address" },
-            { internalType: "uint24", name: "_fee", type: "uint24" },
-            { internalType: "uint32", name: "_twapInterval", type: "uint32" },
-        ],
-        name: "getTwap",
-        outputs: [{ internalType: "int24", name: "", type: "int24" }],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [
-            { internalType: "uint256", name: "sqrtPriceX96", type: "uint256" },
-            { internalType: "uint8", name: "decimalsToken1", type: "uint8" },
-        ],
-        name: "sqrtPriceX96ToUint",
-        outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-        stateMutability: "pure",
         type: "function",
     },
 ]

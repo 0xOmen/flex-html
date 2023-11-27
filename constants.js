@@ -1,17 +1,43 @@
-export const contractAddress = "0xd0dE1F2424e796b92188d44016e47Ae89fB7ADd7"
+export const contractAddress = "0x0b6Ee1185559dD97E5BFe91996dB4b51de850EaE"
 export const abi = [
     {
-        anonymous: false,
         inputs: [
+            { internalType: "uint8", name: "_protocolFee", type: "uint8" },
             {
-                indexed: false,
-                internalType: "uint8",
-                name: "version",
-                type: "uint8",
+                internalType: "address",
+                name: "_UNISWAP_TWAP_LIBRARY",
+                type: "address",
             },
+            { internalType: "address", name: "_UNIV3FACTORY", type: "address" },
         ],
-        name: "Initialized",
-        type: "event",
+        stateMutability: "nonpayable",
+        type: "constructor",
+    },
+    {
+        inputs: [{ internalType: "address", name: "target", type: "address" }],
+        name: "AddressEmptyCode",
+        type: "error",
+    },
+    {
+        inputs: [{ internalType: "address", name: "account", type: "address" }],
+        name: "AddressInsufficientBalance",
+        type: "error",
+    },
+    { inputs: [], name: "FailedInnerCall", type: "error" },
+    {
+        inputs: [{ internalType: "address", name: "owner", type: "address" }],
+        name: "OwnableInvalidOwner",
+        type: "error",
+    },
+    {
+        inputs: [{ internalType: "address", name: "account", type: "address" }],
+        name: "OwnableUnauthorizedAccount",
+        type: "error",
+    },
+    {
+        inputs: [{ internalType: "address", name: "token", type: "address" }],
+        name: "SafeERC20FailedOperation",
+        type: "error",
     },
     {
         anonymous: false,
@@ -171,7 +197,6 @@ export const abi = [
         name: "betTaken",
         type: "event",
     },
-    { stateMutability: "nonpayable", type: "fallback" },
     {
         inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
         name: "AllBets",
@@ -182,7 +207,7 @@ export const abi = [
                     { internalType: "address", name: "Taker", type: "address" },
                     {
                         internalType: "address",
-                        name: "SkinToken",
+                        name: "CollateralToken",
                         type: "address",
                     },
                     {
@@ -196,26 +221,26 @@ export const abi = [
                         type: "address",
                     },
                 ],
-                internalType: "struct FlexBetEscrow.BetAddresses",
+                internalType: "struct Flex.BetAddresses",
                 name: "betAddresses",
                 type: "tuple",
             },
             { internalType: "uint256", name: "BetAmount", type: "uint256" },
             { internalType: "uint256", name: "EndTime", type: "uint256" },
             {
-                internalType: "enum FlexBetEscrow.Status",
+                internalType: "enum Flex.Status",
                 name: "BetStatus",
                 type: "uint8",
             },
             {
-                internalType: "enum FlexBetEscrow.OracleType",
+                internalType: "enum Flex.OracleType",
                 name: "OracleName",
                 type: "uint8",
             },
             { internalType: "uint24", name: "UniswapFeePool", type: "uint24" },
             { internalType: "uint256", name: "PriceLine", type: "uint256" },
             {
-                internalType: "enum FlexBetEscrow.Comparison",
+                internalType: "enum Flex.Comparison",
                 name: "Comparator",
                 type: "uint8",
             },
@@ -277,7 +302,7 @@ export const abi = [
             { internalType: "address", name: "_takerAddress", type: "address" },
             {
                 internalType: "address",
-                name: "_skinTokenAddress",
+                name: "_collateralTokenAddress",
                 type: "address",
             },
             { internalType: "uint256", name: "_amount", type: "uint256" },
@@ -293,14 +318,14 @@ export const abi = [
                 type: "address",
             },
             {
-                internalType: "enum FlexBetEscrow.OracleType",
+                internalType: "enum Flex.OracleType",
                 name: "_oracleName",
                 type: "uint8",
             },
             { internalType: "uint24", name: "_uniFeePool", type: "uint24" },
             { internalType: "uint256", name: "_priceLine", type: "uint256" },
             {
-                internalType: "enum FlexBetEscrow.Comparison",
+                internalType: "enum Flex.Comparison",
                 name: "_comparator",
                 type: "uint8",
             },
@@ -338,6 +363,16 @@ export const abi = [
         type: "function",
     },
     {
+        inputs: [{ internalType: "bytes", name: "", type: "bytes" }],
+        name: "checkUpkeep",
+        outputs: [
+            { internalType: "bool", name: "upkeepNeeded", type: "bool" },
+            { internalType: "bytes", name: "performData", type: "bytes" },
+        ],
+        stateMutability: "view",
+        type: "function",
+    },
+    {
         inputs: [
             { internalType: "uint256", name: "_betNumber", type: "uint256" },
         ],
@@ -352,15 +387,6 @@ export const abi = [
             { internalType: "uint256", name: "_amount", type: "uint256" },
         ],
         name: "depositTokens",
-        outputs: [],
-        stateMutability: "nonpayable",
-        type: "function",
-    },
-    {
-        inputs: [
-            { internalType: "uint256", name: "_betNumber", type: "uint256" },
-        ],
-        name: "emergencyCloseout",
         outputs: [],
         stateMutability: "nonpayable",
         type: "function",
@@ -410,25 +436,17 @@ export const abi = [
         type: "function",
     },
     {
-        inputs: [
-            { internalType: "uint8", name: "_protocolFee", type: "uint8" },
-            {
-                internalType: "address",
-                name: "_UNISWAP_TWAP_LIBRARY",
-                type: "address",
-            },
-            { internalType: "address", name: "_UNIV3FACTORY", type: "address" },
-        ],
-        name: "initialize",
-        outputs: [],
-        stateMutability: "nonpayable",
-        type: "function",
-    },
-    {
         inputs: [],
         name: "owner",
         outputs: [{ internalType: "address", name: "", type: "address" }],
         stateMutability: "view",
+        type: "function",
+    },
+    {
+        inputs: [{ internalType: "bytes", name: "performData", type: "bytes" }],
+        name: "performUpkeep",
+        outputs: [],
+        stateMutability: "nonpayable",
         type: "function",
     },
     {
