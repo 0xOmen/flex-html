@@ -20,7 +20,7 @@ async function isConnected() {
         console.log(`You're connected to: ${accounts[0]}`)
         connectButton.innerHTML = `${accounts[0].substring(
             0,
-            6
+            6,
         )}...${accounts[0].substring(38, 43)} Connected`
         populateBets()
     } else {
@@ -36,7 +36,7 @@ async function connect() {
         const userAddress = await signer.getAddress()
         const accountConnected = `${userAddress.substring(
             0,
-            6
+            6,
         )}...${userAddress.substring(38, 43)} Connected`
         connectButton.innerHTML = accountConnected
         console.log("Metamask connected")
@@ -66,7 +66,7 @@ async function populateBets() {
                     betOutput += getBetData(
                         userBets[bets],
                         betDetails,
-                        userAddress
+                        userAddress,
                     )
                 }
             }
@@ -80,12 +80,12 @@ async function populateBets() {
 function getBetData(betNum, betDetails, userAddress) {
     let counterParty, status, outcome
     if (betDetails[0][0] == userAddress) {
-        counterParty = betDetails[0][1]
+        counterParty = `  ${betDetails[0][1]}  `
     } else {
-        counterParty = betDetails[0][0]
+        counterParty = `  ${betDetails[0][0]}  `
     }
     if (counterParty == "0x0000000000000000000000000000000000000000") {
-        counterParty = "Anyone"
+        counterParty = " Anyone "
     }
     if (betDetails[3] == 0) {
         status = "Waiting for Taker"
@@ -98,7 +98,7 @@ function getBetData(betNum, betDetails, userAddress) {
             status = "Ready to Close"
             outcome = "Awaiting Close Transaction"
         } else {
-            status = "Awaiting End Time"
+            status = `Closes ${Date(betDetails[2].toNumber() * 1000)}`
             outcome = "Pending..."
         }
     } else if (betDetails[3] == 3) {
@@ -150,9 +150,8 @@ async function acceptBet() {
 
         console.log(`Accpeting bet ${betNumber}`)
         try {
-            const acceptBetTx = await contract.acceptBetWithUserBalance(
-                betNumber
-            )
+            const acceptBetTx =
+                await contract.acceptBetWithUserBalance(betNumber)
             await acceptBetTx.wait()
         } catch (error) {
             console.log(error)
