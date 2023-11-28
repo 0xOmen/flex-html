@@ -80,9 +80,9 @@ async function populateBets() {
 function getBetData(betNum, betDetails, userAddress) {
     let counterParty, status, outcome
     if (betDetails[0][0] == userAddress) {
-        counterParty = `  ${betDetails[0][1]}  `
+        counterParty = betDetails[0][1]
     } else {
-        counterParty = `  ${betDetails[0][0]}  `
+        counterParty = betDetails[0][0]
     }
     if (counterParty == "0x0000000000000000000000000000000000000000") {
         counterParty = " Anyone "
@@ -98,7 +98,10 @@ function getBetData(betNum, betDetails, userAddress) {
             status = "Ready to Close"
             outcome = "Awaiting Close Transaction"
         } else {
-            status = `Closes ${Date(betDetails[2].toNumber() * 1000)}`
+            const date = new Date(
+                betDetails[2].toNumber() * 1000,
+            ).toLocaleString()
+            status = `Closes ${date}`
             outcome = "Pending..."
         }
     } else if (betDetails[3] == 3) {
@@ -115,10 +118,10 @@ function getBetData(betNum, betDetails, userAddress) {
     }
 
     const answer = `<tr>
-            <td style="text-align: center"> ${betNum}</td>
-            <td style="text-align: center">${status}</td>
-            <td style="text-align: center">${counterParty}</td>
-            <td style="text-align: center">${outcome}</td>
+            <td style="text-align: center"> ${betNum} </td>
+            <td style="text-align: center"> ${status} </td>
+            <td style="text-align: center; padding-right: 5px; padding-left: 5px">  ${counterParty}  </td>
+            <td style="text-align: center"> ${outcome} </td>
         </tr>`
     return answer
 }
