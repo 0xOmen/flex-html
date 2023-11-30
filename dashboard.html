@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 
 <html>
     <head>
@@ -47,7 +47,7 @@
                 <tr>
                     <th>Bet Number</th>
                     <th>Status</th>
-                    <th>Counter Party</th>
+                    <th>Counterparty</th>
                     <th>Result</th>
                 </tr>
             </thread>
@@ -60,6 +60,26 @@
         <label>Bet Number</label>
         <input id="acceptBetNumber" placeholder="1" type="number" />
         <button type="button" id="acceptBetNumberButton">Accept Bet</button>
+        <br /><br />
+        <strong>Lookup Bet:</strong>
+        <br />
+        <label>Bet Number</label>
+        <input id="lookupBetNumber" placeholder="1" type="number" />
+        <button type="button" id="lookupBetNumberButton">Lookup Bet</button>
+
+        <section class="modal hidden">
+            <div class="flex">
+                <button class="btn-close">⨉</button>
+            </div>
+            <div>
+                <h3>Bet Lookup</h3>
+
+                <label id="betLookupResults">...</label>
+            </div>
+
+            <button class="btn" id="acceptBetButton">Accept Bet</button>
+        </section>
+
         <br /><br />
         <strong>Close Bet:</strong>
         <br />
