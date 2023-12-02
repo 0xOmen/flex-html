@@ -1,4 +1,4 @@
-Create a basic front end for Flex
+A basic front end for Flex in HTML
 
 Connect
 ethers.js connection to browser wallet. So far only tested with Metamask
